@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../styles/Scores.module.css';
+import Image from 'next/image';
 
 export default async function ScoresDisplay() {
     const date = '20241117'; // Replace with dynamic date if needed
@@ -31,7 +32,7 @@ export default async function ScoresDisplay() {
                     <p className={styles.date}>{new Date(game.date).toLocaleString()}</p>
                     {game.competitors.map((team, i) => (
                         <div key={i} className={styles.team}>
-                            <img src={team.logo} alt={`${team.name} logo`} className={styles.logo} />
+                            <Image src={team.logo} alt={`${team.name} logo`} className={styles.logo} />
                             <p className={styles.name}>{team.name}</p>
                             <p className={styles.score}>{team.score}</p>
                         </div>
