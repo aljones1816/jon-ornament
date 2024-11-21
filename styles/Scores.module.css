@@ -6,6 +6,16 @@
     width: 100%;
     margin-top: 20px;
     text-align: center;
+    transition: opacity 0.5s ease-in-out;
+    /* Smooth fade effect */
+}
+
+.fadeIn {
+    opacity: 1;
+}
+
+.fadeOut {
+    opacity: 0;
 }
 
 .title {
@@ -49,11 +59,4 @@
     font-weight: bold;
     color: #222;
     margin-right: 10px;
-}
-
-.separator {
-    border: 0;
-    height: 1px;
-    background: #ddd;
-    margin: 10px 0;
 }
