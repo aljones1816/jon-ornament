@@ -32,7 +32,7 @@ export default async function ScoresDisplay() {
                     <p className={styles.date}>{new Date(game.date).toLocaleString()}</p>
                     {game.competitors.map((team, i) => (
                         <div key={i} className={styles.team}>
-                            <Image src={team.logo} alt={`${team.name} logo`} className={styles.logo} />
+                            <Image src={team.logo} alt={`${team.name} logo`} className={styles.logo} width={30} height={30} />
                             <p className={styles.name}>{team.name}</p>
                             <p className={styles.score}>{team.score}</p>
                         </div>
