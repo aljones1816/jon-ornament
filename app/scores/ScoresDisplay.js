@@ -21,32 +21,26 @@ export default function ScoresDisplay() {
   const [games, setGames] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const [timestamp, setTimestamp] = useState("");
+
+  async function fetchGames() {
+    try {
+      const response = await fetch("/api/scores");
+      if (!response.ok) throw new Error("Failed to fetch scores data");
+
+      const data = await response.json();
+      setGames(data.games);
+      setTimestamp(data.timestamp);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // Fetch games on component mount
   useEffect(() => {
-    async function fetchGames() {
-      const response = await fetch(
-        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${date}`,
-        { cache: "no-store" }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const fetchedGames = data.events.map((event) => ({
-          date: event.date,
-          competitors: event.competitions[0].competitors.map((team) => ({
-            name: team.team.displayName,
-            score: team.score,
-            logo: team.team.logo,
-          })),
-        }));
-
-        setGames(fetchedGames);
-      }
-    }
-
     fetchGames();
+    const interval = setInterval(fetchGames, 10 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // Cycle through games every 5 seconds
@@ -74,6 +68,7 @@ export default function ScoresDisplay() {
   return (
     <div className={`${styles.card} ${fade ? styles.fadeIn : styles.fadeOut}`}>
       <h2 className={styles.title}>NFL Scores</h2>
+      <p className={styles.timestamp}>Last updated: {timestamp}</p>
       <div className={styles.game}>
         <p className={styles.date}>
           {new Date(currentGame.date).toLocaleString()}
